@@ -4,7 +4,7 @@ import { Tabs, CommandConsole } from "../components"
 import { Wifi, WifiOff } from "lucide-react"
 import { useCheckOnlineConnection } from "../hooks"
 
-export default function Home() {
+export function Home() {
     const isOnline = useCheckOnlineConnection()
 
     return (

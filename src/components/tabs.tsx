@@ -1,18 +1,18 @@
+import { Tabs as TabsHU, Tab } from "@heroui/react";
+import { Market } from "./market";
+import { Leaderboard } from "./leaderboard";
+
 export function Tabs() {
-    /**
-     * <Tabs defaultValue="leaderboard" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
-            <TabsTrigger value="market">Market</TabsTrigger>
-        </TabsList>
-        <TabsContent value="leaderboard">
-            <Leaderboard />
-        </TabsContent>
-        <TabsContent value="market">
-            <Market />
-        </TabsContent>
-    </Tabs>
-     * 
-     */
-    return ""
+    return (
+        <div className="flex w-full flex-col">
+            <TabsHU aria-label="Options">
+                <Tab key="markets" title="Markets">
+                    <Market />
+                </Tab>
+                <Tab key="leaderboard" title="Leaderboard">
+                    <Leaderboard />
+                </Tab>
+            </TabsHU>
+        </div>
+    );
 }

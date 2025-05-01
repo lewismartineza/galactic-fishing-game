@@ -11,6 +11,8 @@
     "commit": "oc"
   },
   "dependencies": {
+    "@heroui/react": "2.7.8",
+    "@heroui/tabs": "2.2.16",
     "@tailwindcss/vite": "4.1.5",
     "@tanstack/react-query": "5.75.0",
     "lucide-react": "0.503.0",
