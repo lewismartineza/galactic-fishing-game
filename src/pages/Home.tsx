@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Tabs, Leaderboard, Market, CommandConsole } from "../components"
+import { Tabs, CommandConsole } from "../components"
 import { Wifi, WifiOff } from "lucide-react"
+import { useCheckOnlineConnection } from "../hooks"
 
 export default function Home() {
+    const isOnline = useCheckOnlineConnection()
 
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
@@ -31,18 +32,7 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2">
-                        <Tabs defaultValue="leaderboard" className="w-full">
-                            <TabsList className="grid w-full grid-cols-2 mb-8">
-                                <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
-                                <TabsTrigger value="market">Market</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="leaderboard">
-                                <Leaderboard />
-                            </TabsContent>
-                            <TabsContent value="market">
-                                <Market />
-                            </TabsContent>
-                        </Tabs>
+                        <Tabs />
                     </div>
 
                     <div>
