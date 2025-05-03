@@ -1,37 +1,39 @@
 import { Player } from "../core/entities"
-import { BadgeCheck, Skull } from "lucide-react"
-import { getRankIcon } from "../core/utils/rankIcons"
+import { CheckCircle, AlertTriangle } from "lucide-react"
+// import clsx from "clsx"
 
-interface Props {
+type Props = {
     player: Player
+    highlight?: boolean
+    rank: number
 }
 
-export function PlayerCard({ player }: Props) {
-    const rankIcon = getRankIcon(player.rank)
-
+export default function PlayerCard({ player, highlight = false, rank }: Props) {
     return (
-        <div className="p-4 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors">
-            <div className="flex justify-between items-start">
-                <div>
-                    <h3 className="text-lg font-medium text-slate-100 flex items-center gap-2">
-                        {rankIcon && <span className="text-xl">{rankIcon}</span>}
-                        {player.username}
-                        {player.isInfected ? (
-                            <Skull className="text-red-400 w-4 h-4" />
-                        ) : (
-                            <BadgeCheck className="text-green-400 w-4 h-4" />
-                        )}
-                    </h3>
-                    <p className="text-sm text-slate-400">Rank: #{player.rank}</p>
+        <div
+        // className={clsx(
+        //     "rounded-lg p-4",
+        //     highlight ? "bg-white text-black" : "bg-slate-800 text-white"
+        // )}
+        >
+            <div className="flex items-center justify-between">
+                <div className="flex gap-2 items-center">
+                    <span className="text-lg font-semibold">{player.username}</span>
+                    {player.isInfected ? (
+                        <AlertTriangle size={16} className="text-red-500" />
+                    ) : (
+                        <CheckCircle size={16} className="text-green-400" />
+                    )}
                 </div>
-                <div className="text-right text-sm text-slate-300">
+                <div className="text-right text-sm">
                     <p>Level: {player.level}</p>
                     <p>XP: {player.xp}</p>
                     <p>Gold: {player.gold}</p>
                 </div>
             </div>
-            <p className="mt-2 text-slate-300">{player.fishEmojis}</p>
-            <p className="text-xs text-slate-400 italic">{player.emojiDescription}</p>
+            <div className="mt-2 text-sm italic text-gray-400">
+                {player.emojiDescription} {player.fishEmojis}
+            </div>
         </div>
     )
 }

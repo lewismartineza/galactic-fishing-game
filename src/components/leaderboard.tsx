@@ -1,40 +1,45 @@
-"use client"
+import { useEffect, useState } from "react"
+import { getPlayerRanks } from "../services"
+import { Player } from "../core/entities"
 
-import { Loader2 } from "lucide-react"
-import { usePlayerRanks } from "../hooks/usePlayerRanks"
-import { PlayerCard } from "./playerCard"
-import { Card, CardHeader, CardBody, Alert } from "@heroui/react"
+type LeaderBoardProps = {
+    currentUsername: string
+}
 
-export function Leaderboard() {
-    const { players, loading, error } = usePlayerRanks()
+export function LeaderBoard({ currentUsername }: LeaderBoardProps) {
+    const [players, setPlayers] = useState<Player[]>([])
 
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-64">
-                <Loader2 className="h-8 w-8 animate-spin text-slate-300" />
-            </div>
-        )
-    }
+    useEffect(() => {
+        getPlayerRanks().then(setPlayers)
+    }, [])
 
     return (
-        <Card className="bg-slate-800 border-slate-700 gap-6 mt-6 p-4 rounded-lg">
-            <CardHeader>
-                <div className="text-xl text-slate-400">Leaderboard</div>
-            </CardHeader>
-            <CardBody>
-                {error && (
-                    <Alert
-                        className="mb-4 bg-amber-900/30 border-amber-800"
-                        title="Error loading leaderboard"
-                        description={error}
-                    />
-                )}
-                <div className="space-y-4">
-                    {players.map((player) => (
-                        <PlayerCard key={player.username} player={player} />
-                    ))}
-                </div>
-            </CardBody>
-        </Card>
+        <div className="space-y-4">
+            {players.map((player) => {
+                const isCurrent = player.username === currentUsername
+
+                return (
+                    <div
+                        key={player.username}
+                        className={`rounded-xl p-4 ${isCurrent ? "bg-white text-black" : "bg-slate-800 text-white"
+                            }`}
+                    >
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <div className="font-bold">{player.username}</div>
+                                <div className="text-sm">Rank: #{player.rank}</div>
+                            </div>
+                            <div className="text-right text-sm">
+                                <div>Level: {player.level}</div>
+                                <div>XP: {player.xp.toLocaleString()}</div>
+                                <div>Gold: {player.gold.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <div className="mt-2 text-sm italic text-slate-400">{player.emojiDescription}</div>
+                        <div className="text-xl">{player.fishEmojis}</div>
+                    </div>
+                )
+            })}
+        </div>
     )
 }

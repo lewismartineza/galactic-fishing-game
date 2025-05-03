@@ -1,8 +1,12 @@
 import { Tabs as TabsHU, Tab } from "@heroui/react";
 import { Market } from "./market";
-import { Leaderboard } from "./leaderboard";
+import { LeaderBoard } from "./leaderboard";
 
-export function Tabs() {
+type Props = {
+    currentUsername: string
+}
+
+export function Tabs({ currentUsername }: Props) {
     return (
         <div className="flex w-full flex-col overflow-auto no-scrollbar h-[750px]">
             <TabsHU aria-label="Options">
@@ -10,9 +14,9 @@ export function Tabs() {
                     <Market />
                 </Tab>
                 <Tab key="leaderboard" title="Leaderboard">
-                    <Leaderboard />
+                    <LeaderBoard currentUsername={currentUsername} />
                 </Tab>
             </TabsHU>
         </div>
-    );
+    )
 }
