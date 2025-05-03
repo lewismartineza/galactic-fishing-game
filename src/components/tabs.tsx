@@ -4,7 +4,7 @@ import { Leaderboard } from "./leaderboard";
 
 export function Tabs() {
     return (
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col overflow-auto no-scrollbar h-[750px]">
             <TabsHU aria-label="Options">
                 <Tab key="markets" title="Markets">
                     <Market />

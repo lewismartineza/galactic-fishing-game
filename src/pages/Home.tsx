@@ -9,7 +9,7 @@ export function Home() {
 
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800">
-            <div className="container mx-auto px-4 py-8">
+            <div className="px-4 py-8">
                 <header className="mb-8">
                     <div className="flex items-center justify-between text-slate-400">
                         <h1 className="text-3xl font-bold">Game Dashboard</h1>
