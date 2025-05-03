@@ -24,12 +24,12 @@ export function CommandConsole() {
             </div>
 
             <div className="flex-1 p-3 overflow-auto no-scrollbar">
-                <CommandLog entries={commandHistory} />
                 {fishingCooldown > 0 && (
                     <div className="text-amber-400 text-sm mt-2">
                         Fishing cooldown: {fishingCooldown}s remaining
                     </div>
                 )}
+                <CommandLog entries={[...commandHistory].reverse()} />
             </div>
 
             <div className="p-3 border-t border-slate-700">
@@ -39,7 +39,7 @@ export function CommandConsole() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Type a command (e.g. /help)"
-                        className="bg-slate-900 text-slate-400 rounded-md p-1"
+                        className="bg-slate-900 text-slate-400 rounded-md p-1 focus-none:focus"
                         autoComplete="off"
                     />
                     <Button type="submit">
@@ -48,31 +48,31 @@ export function CommandConsole() {
                 </form>
 
                 <div className="grid grid-rows-2 grid-cols-4 gap-2 mt-4">
-                    <Button className="flex" onClick={() => setInput("/fish")}>
+                    <Button className="flex" onPress={() => setInput("/fish")}>
                         <Fish className="mr-1" />
                         Fish
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/inventory")}>
+                    <Button className="flex" onPress={() => setInput("/inventory")}>
                         <Package className="mr-1" />
                         Inventory
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/sell all")}>
+                    <Button className="flex" onPress={() => setInput("/sell all")}>
                         <Coins className="mr-1" />
                         Sell All
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/sell <number of fish>")}>
+                    <Button className="flex" onPress={() => setInput("/sell <number of fish>")}>
                         <Coins className="mr-1" />
                         Sell Fish
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/eat <number of fish>")}>
+                    <Button className="flex" onPress={() => setInput("/eat <number of fish>")}>
                         <UtensilsCrossed className="mr-1" />
                         Eat
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/message <text>")}>
+                    <Button className="flex" onPress={() => setInput("/message <text>")}>
                         <Text className="mr-1" />
                         Message
                     </Button>
-                    <Button className="flex" onClick={() => setInput("/send-money <amount> <user>")}>
+                    <Button className="flex" onPress={() => setInput("/send-money <amount> <user>")}>
                         <BadgeDollarSign className="mr-1" />
                         Send Money
                     </Button>

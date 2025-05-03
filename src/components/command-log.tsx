@@ -5,8 +5,9 @@ type CommandLogProps = {
 }
 
 export function CommandLog({ entries }: CommandLogProps) {
+
     return (
-        <div className="space-y-2">
+        <div className="space-y-2" id="logFile">
             {entries.map((entry, i) => (
                 <div key={i} className="text-sm text-white">
                     <div className="text-slate-400"> {entry.command}</div>
