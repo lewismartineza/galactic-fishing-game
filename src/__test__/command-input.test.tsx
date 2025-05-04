@@ -51,7 +51,6 @@ describe('CommandInput', () => {
 
         const inputElement = screen.getByPlaceholderText("Type a command (e.g. /help)");
 
-        // Usar fireEvent en lugar de userEvent para mayor compatibilidad
         fireEvent.change(inputElement, { target: { value: 'test command' } });
 
         expect(mockSetInput).toHaveBeenCalledWith('test command');
@@ -92,7 +91,6 @@ describe('CommandInput', () => {
 
         const button = screen.getByRole('button');
 
-        // Usar fireEvent.click en lugar de userEvent.click
         fireEvent.click(button);
 
         expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
