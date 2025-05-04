@@ -20,6 +20,9 @@ importers:
       '@tanstack/react-query':
         specifier: 5.75.0
         version: 5.75.0(react@19.0.0)
+      clsx:
+        specifier: 2.1.1
+        version: 2.1.1
       lucide-react:
         specifier: 0.503.0
         version: 0.503.0(react@19.0.0)

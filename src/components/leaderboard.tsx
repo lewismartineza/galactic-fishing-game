@@ -14,14 +14,14 @@ export function LeaderBoard({ currentUsername }: LeaderBoardProps) {
     }, [])
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
             {players.map((player) => {
                 const isCurrent = player.username === currentUsername
 
                 return (
                     <div
                         key={player.username}
-                        className={`rounded-xl p-4 ${isCurrent ? "bg-white text-black" : "bg-slate-800 text-white mt-6"
+                        className={`rounded-xl p-4 ${isCurrent ? "bg-white text-black" : "bg-slate-800 text-white"
                             }`}
                     >
                         <div className="flex justify-between items-center">

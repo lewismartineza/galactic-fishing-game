@@ -1,6 +1,6 @@
 import { Player } from "../core/entities"
 import { CheckCircle, AlertTriangle } from "lucide-react"
-// import clsx from "clsx"
+import clsx from "clsx"
 
 type Props = {
     player: Player
@@ -8,21 +8,21 @@ type Props = {
     rank: number
 }
 
-export default function PlayerCard({ player, highlight = false, rank }: Props) {
+export default function PlayerCard({ player, highlight = false }: Props) {
     return (
         <div
-        // className={clsx(
-        //     "rounded-lg p-4",
-        //     highlight ? "bg-white text-black" : "bg-slate-800 text-white"
-        // )}
+            className={clsx(
+                "rounded-lg p-4",
+                highlight ? "bg-white text-black" : "bg-slate-800 text-white"
+            )}
         >
             <div className="flex items-center justify-between">
                 <div className="flex gap-2 items-center">
                     <span className="text-lg font-semibold">{player.username}</span>
                     {player.isInfected ? (
-                        <AlertTriangle size={16} className="text-red-500" />
+                        <AlertTriangle data-testid="infected-icon" size={16} className="text-red-500" />
                     ) : (
-                        <CheckCircle size={16} className="text-green-400" />
+                        <CheckCircle data-testid="not-infected-icon" size={16} className="text-green-400" />
                     )}
                 </div>
                 <div className="text-right text-sm">
