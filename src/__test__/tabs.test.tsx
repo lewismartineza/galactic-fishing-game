@@ -3,7 +3,6 @@ import { describe, it, expect } from "vitest"
 import userEvent from "@testing-library/user-event"
 import { Tabs } from "../components/tabs"
 
-// Mock LeaderBoard y Market
 vi.mock("../components/leaderboard", () => ({
     LeaderBoard: ({ currentUsername }: { currentUsername: string }) => (
         <div data-testid="leaderboard">Leaderboard for {currentUsername}</div>
