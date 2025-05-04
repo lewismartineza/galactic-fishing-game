@@ -38,7 +38,7 @@ export function CommandConsole() {
                         ref={inputRef}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Type a command (e.g. /help)"
+                        placeholder="Type a command"
                         className="bg-slate-900 text-slate-400 rounded-md p-1 focus-none:focus"
                         autoComplete="off"
                     />
