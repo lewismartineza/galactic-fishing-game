@@ -10,11 +10,11 @@ export function Tabs({ currentUsername }: Props) {
     return (
         <div className="flex w-full flex-col overflow-auto no-scrollbar h-[750px]">
             <TabsHU aria-label="Options">
-                <Tab key="markets" title="Markets">
-                    <Market />
-                </Tab>
                 <Tab key="leaderboard" title="Leaderboard">
                     <LeaderBoard currentUsername={currentUsername} />
+                </Tab>
+                <Tab key="markets" title="Markets">
+                    <Market />
                 </Tab>
             </TabsHU>
         </div>
