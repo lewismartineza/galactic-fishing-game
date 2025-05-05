@@ -12,7 +12,6 @@ type UserData = {
 
 export function useLocalStorageData(updateInterval = 5000) {
     const [userData, setUserData] = useState<UserData>(() => {
-        // Función inicializadora segura
         const safeParse = (key: string, defaultValue: any) => {
             try {
                 const item = localStorage.getItem(key)

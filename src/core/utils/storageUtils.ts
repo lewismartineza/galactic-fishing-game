@@ -1,4 +1,3 @@
-// Función para guardar datos del usuario
 export function saveUserData(data: {
     username: string;
     level: number;
@@ -15,7 +14,6 @@ export function saveUserData(data: {
     }
 }
 
-// Función para obtener todos los datos del usuario
 export function getUserData() {
     return {
         username: JSON.parse(localStorage.getItem("username") || "Guest"),
