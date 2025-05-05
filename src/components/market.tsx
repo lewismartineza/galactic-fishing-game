@@ -17,11 +17,11 @@ export function Market() {
     }
 
     return (
-        <Card className="bg-slate-800 border-slate-700 gap-6 mt-6 p-4 rounded-lg">
-            <CardHeader>
+        <div className="bg-slate-800 border-slate-700 gap-6 mt-6 p-4 rounded-lg">
+            <div>
                 <div className="text-xl text-slate-400">Market Items</div>
-            </CardHeader>
-            <CardBody>
+            </div>
+            <div className="py-4">
                 {error && (
                     <Alert
                         className="mb-4 bg-amber-900/30 border-amber-800"
@@ -34,8 +34,8 @@ export function Market() {
                         <MarketItemCard key={item.id} item={item} />
                     ))}
                 </div>
-            </CardBody>
-        </Card>
+            </div>
+        </div>
     )
 }
 

@@ -8,7 +8,7 @@ type Props = {
 
 export function Tabs({ currentUsername }: Props) {
     return (
-        <div className="flex w-full flex-col overflow-auto no-scrollbar h-[750px]">
+        <div className="flex w-full flex-col overflow-auto h-[750px]">
             <TabsHU aria-label="Options">
                 <Tab key="leaderboard" title="Leaderboard">
                     <LeaderBoard currentUsername={currentUsername} />

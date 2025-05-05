@@ -23,7 +23,7 @@ export function CommandConsole() {
                 </h2>
             </div>
 
-            <div className="flex-1 p-3 overflow-auto no-scrollbar">
+            <div className="flex-1 p-3 overflow-auto">
                 {fishingCooldown > 0 && (
                     <div className="text-amber-400 text-sm mt-2">
                         Fishing cooldown: {fishingCooldown}s remaining

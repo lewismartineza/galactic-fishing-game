@@ -32,9 +32,9 @@ export function Home() {
         <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800">
             <div className="px-4 py-8">
                 <header className="mb-8">
-                    <div className="flex items-center justify-between text-slate-400">
-                        <h1 className="text-3xl font-bold">Game Dashboard</h1>
-                        <div className="flex items-center gap-4">
+                    <div className="grid grid-cols-2 text-center text-slate-400">
+                        <h1 className="col-span-2 text-3xl font-bold">Game Dashboard</h1>
+                        <div className="col-span-2 flex items-center gap-4 justify-self-center">
                             <UserInfo />
 
                             <div className="flex items-center gap-2">
@@ -52,7 +52,7 @@ export function Home() {
                             </div>
                         </div>
                     </div>
-                    <p className="mt-2 text-slate-300">View the live leaderboard and market</p>
+                    <p className="mt-2 text-center text-slate-300">View the live leaderboard and market</p>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

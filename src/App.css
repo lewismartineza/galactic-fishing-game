@@ -23,15 +23,59 @@
   --radius: 0.5rem;
 }
 
-@layer utilities {
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
-      }
-      .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-      input {
-          outline: none;
-      }
-  }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(18, 28, 43, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #375a82;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4a7cb3;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(18, 28, 43, 0.5);
+  border-radius: 4px;
+}
+
+.command-console::-webkit-scrollbar {
+  width: 6px;
+  background-color: rgba(15, 25, 40, 0.8);
+}
+
+.command-console::-webkit-scrollbar-thumb {
+  background-color: #2a9d8f;
+  border-radius: 3px;
+}
+
+.command-console::-webkit-scrollbar-thumb:hover {
+  background-color: #35c0af;
+}
+
+.leaderboard-container::-webkit-scrollbar {
+  width: 8px;
+  background-color: rgba(18, 28, 43, 0.7);
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb {
+  background-color: #375a82;
+  border-radius: 4px;
+}
+
+.leaderboard-container {
+  scrollbar-gutter: stable;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
+}
+
+.command-console {
+  scrollbar-gutter: stable;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 4px;
+}

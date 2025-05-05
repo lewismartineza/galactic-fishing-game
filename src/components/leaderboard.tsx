@@ -43,9 +43,12 @@ export function LeaderBoard({ currentUsername }: LeaderBoardProps) {
     }, [currentUsername]);
 
     return (
-        <div className="space-y-4 mt-6">
+        <div className="space-y-4 mt-6 bg-slate-800 p-4 rounded-lg">
+            <div>
+                <div className="text-xl text-slate-400">Leaderboard</div>
+            </div>
             {players.map((player) => (
-                <div key={player.username} className={`rounded-xl p-4 ${player.username === currentUsername ? "bg-white text-black" : "bg-slate-800 text-white"}`}>
+                <div key={player.username} className={`rounded-xl p-4 ${player.username === currentUsername ? "bg-white text-black" : "p-4 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors text-white"}`}>
                     <div className="flex justify-between items-center">
                         <div>
                             <div className="font-bold">{player.username}</div>
