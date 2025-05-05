@@ -1,7 +1,6 @@
 import { Tabs as TabsHU, Tab } from "@heroui/react";
 import { Market } from "./market";
 import { LeaderBoard } from "./leaderboard";
-import { Fish } from "../types/console";
 
 type Props = {
     currentUsername: string;

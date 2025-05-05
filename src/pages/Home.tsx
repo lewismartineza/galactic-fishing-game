@@ -5,35 +5,23 @@ import { Wifi, WifiOff } from "lucide-react"
 import { useCheckOnlineConnection } from "../hooks"
 import { useEffect, useState } from "react"
 import UserNameModal from "../components/user-name-modal"
-import { getPlayerRanks } from "../services"
-import { Player } from "../core/entities"
 import { useCommandConsole } from "../hooks/useCommandConsole"
+import UserInfo from "../components/user-info"
 
 export function Home() {
     const isOnline = useCheckOnlineConnection()
     const [username, setUsername] = useState<string | null>(null)
-    const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null)
     const {
-        isInventoryLoaded,
-        money,
-        xp,
-        inventory
+        isInventoryLoaded
     } = useCommandConsole()
 
     useEffect(() => {
-        const saved = localStorage.getItem("username")
-        if (saved) setUsername(saved)
+        const savedUsername = localStorage.getItem("username")
+        if (savedUsername) setUsername(savedUsername)
     }, [])
 
-    useEffect(() => {
-        if (!username) return
-        getPlayerRanks().then(players => {
-            const player = players.find(p => p.username === username)
-            setCurrentPlayer(player || null)
-        })
-    }, [username])
-
     if (!username) return <UserNameModal onConfirm={setUsername} />
+
     if (!isInventoryLoaded) return (
         <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center">
             <div className="text-white">Loading game data...</div>
@@ -47,9 +35,8 @@ export function Home() {
                     <div className="flex items-center justify-between text-slate-400">
                         <h1 className="text-3xl font-bold">Game Dashboard</h1>
                         <div className="flex items-center gap-4">
-                            <div className="text-sm text-white">
-                                {username} — 🪙 {money ?? 0} — ⚔️ {xp ?? 0} — 🎒 {inventory.length}
-                            </div>
+                            <UserInfo />
+
                             <div className="flex items-center gap-2">
                                 {isOnline ? (
                                     <>
