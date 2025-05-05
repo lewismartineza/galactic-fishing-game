@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { Input, Button } from "@heroui/react"
-import { Send, HelpCircle, Fish, Package, Coins, UtensilsCrossed, BadgeDollarSign, Text } from "lucide-react"
+import { Send, HelpCircle, Fish, Package, Coins, UtensilsCrossed, BadgeDollarSign, Text, ChartBarBig } from "lucide-react"
 import { useCommandConsole } from "../hooks/useCommandConsole"
 import { CommandLog } from "./command-log"
 
@@ -75,6 +75,10 @@ export function CommandConsole() {
                     <Button className="flex" onPress={() => setInput("/send-money <amount> <user>")}>
                         <BadgeDollarSign className="mr-1" />
                         Send Money
+                    </Button>
+                    <Button className="flex" onPress={() => setInput("/stats")}>
+                        <ChartBarBig className="mr-1" />
+                        Stats
                     </Button>
                 </div>
             </div>

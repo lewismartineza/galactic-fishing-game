@@ -1,10 +1,11 @@
 import { Tabs as TabsHU, Tab } from "@heroui/react";
 import { Market } from "./market";
 import { LeaderBoard } from "./leaderboard";
+import { Fish } from "../types/console";
 
 type Props = {
-    currentUsername: string
-}
+    currentUsername: string;
+};
 
 export function Tabs({ currentUsername }: Props) {
     return (
@@ -18,5 +19,5 @@ export function Tabs({ currentUsername }: Props) {
                 </Tab>
             </TabsHU>
         </div>
-    )
+    );
 }
