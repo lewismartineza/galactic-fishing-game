@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react"
 import { useMarketData } from "../hooks/useMarketData"
 import { MarketItemCard } from "./marketItemCard"
-import { Card, CardHeader, CardBody, Alert } from "@heroui/react"
+import { Alert } from "@heroui/react"
 
 export function Market() {
     const { items, loading, error } = useMarketData()

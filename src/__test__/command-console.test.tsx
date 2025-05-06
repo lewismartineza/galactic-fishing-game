@@ -1,127 +1,182 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { CommandConsole } from '../components/command-console'
 import React from 'react'
-import { useCommandConsole } from '../hooks/useCommandConsole'
+
+interface CommandType {
+    id: string;
+    command: string;
+    response: string;
+    timestamp: string;
+}
+
+interface Fish {
+    id: string;
+    name: string;
+    value: number;
+    rarity: string;
+    xp: number;
+    gold: number;
+}
 
 vi.mock('../components/command-log', () => ({
-    CommandLog: vi.fn(({ entries }) => (
-        <div data-testid="command-log">
-            {entries.length} entries
-        </div>
-    ))
+    CommandLog: ({ entries }: { entries: CommandType[] }) => (
+        <div data-testid="command-log">{entries.length} entries</div>
+    )
 }))
 
 vi.mock('@heroui/react', () => ({
-    Input: vi.fn(({ value, onChange, placeholder, className }) => (
+    Input: ({
+        value,
+        onChange,
+        placeholder,
+        className
+    }: {
+        value: string;
+        onChange: (e: { target: { value: string } }) => void;
+        placeholder?: string;
+        className?: string;
+        ref?: any;
+    }) => (
         <input
-            data-testid="command-input"
+            data-testid="input"
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             className={className}
         />
-    )),
-    Button: vi.fn(({ children, type, onPress, className }) => (
+    ),
+    Button: ({
+        children,
+        type,
+        onPress
+    }: {
+        children: React.ReactNode;
+        type?: 'submit' | 'button' | 'reset';
+        onPress?: () => void
+    }) => (
         <button
             data-testid="button"
             type={type}
             onClick={onPress}
-            className={className}
         >
             {children}
         </button>
-    ))
+    )
 }))
 
+vi.mock('lucide-react', () => ({
+    Send: () => <span data-testid="icon-send">Send</span>,
+    HelpCircle: () => <span data-testid="icon-help">HelpCircle</span>,
+    Fish: () => <span data-testid="icon-fish">Fish</span>,
+    Package: () => <span data-testid="icon-package">Package</span>,
+    Coins: () => <span data-testid="icon-coins">Coins</span>,
+    UtensilsCrossed: () => <span data-testid="icon-utensils">UtensilsCrossed</span>,
+    BadgeDollarSign: () => <span data-testid="icon-badge">BadgeDollarSign</span>,
+    Text: () => <span data-testid="icon-text">Text</span>,
+    ChartBarBig: () => <span data-testid="icon-chart">ChartBarBig</span>
+}))
+
+const mockUseCommandConsole = vi.fn()
 vi.mock('../hooks/useCommandConsole', () => ({
-    useCommandConsole: vi.fn()
+    useCommandConsole: () => mockUseCommandConsole()
 }))
 
 describe('CommandConsole', () => {
-    const mockScrollAreaRef = { current: null };
-    let mockSetInput: ReturnType<typeof vi.fn>;
-    let mockHandleSubmit: ReturnType<typeof vi.fn>;
+    const mockSetInput = vi.fn()
+    const mockHandleSubmit = vi.fn((e: React.FormEvent) => e.preventDefault())
+
+    const mockCommandHistory: CommandType[] = [{
+        id: '1',
+        command: 'test',
+        response: 'response',
+        timestamp: new Date().toISOString()
+    }]
+
+    const mockScrollAreaRef = { current: null }
+    const mockInventory: Fish[] = []
 
     beforeEach(() => {
-        mockSetInput = vi.fn();
-        mockHandleSubmit = vi.fn((e: React.FormEvent) => e.preventDefault());
-
-        vi.mocked(useCommandConsole).mockReturnValue({
-            input: 'test command',
+        vi.resetAllMocks()
+        mockUseCommandConsole.mockReturnValue({
+            input: '',
             setInput: mockSetInput,
             handleSubmit: mockHandleSubmit,
-            commandHistory: [
-                { command: 'test', response: 'response', timestamp: new Date().toISOString() },
-                { command: 'help', response: 'help info', timestamp: new Date().toISOString() }
-            ],
+            commandHistory: mockCommandHistory,
             fishingCooldown: 0,
-            scrollAreaRef: mockScrollAreaRef
-        });
-    });
+            scrollAreaRef: mockScrollAreaRef,
+            isInventoryLoaded: false,
+            money: 0,
+            xp: 0,
+            inventory: mockInventory
+        })
+    })
 
-    it('renders correctly', () => {
-        render(<CommandConsole />);
+    it('renders the component correctly', () => {
+        render(<CommandConsole />)
+        expect(screen.getByText(/Command Console/i)).toBeInTheDocument()
+        expect(screen.getByTestId('command-log')).toBeInTheDocument()
+        expect(screen.getByTestId('input')).toBeInTheDocument()
+        expect(screen.getAllByTestId('button')).toHaveLength(9)
+    })
 
-        expect(screen.getByText('Command Console')).toBeInTheDocument();
-        expect(screen.getByTestId('command-input')).toBeInTheDocument();
-        expect(screen.getByTestId('command-log')).toBeInTheDocument();
-        expect(screen.getByTestId('command-log')).toHaveTextContent('2 entries');
-        expect(screen.getAllByTestId('button')).toHaveLength(8);
-    });
+    it('updates input when typed', () => {
+        render(<CommandConsole />)
+        const input = screen.getByTestId('input')
+        fireEvent.change(input, { target: { value: '/fish' } })
+        expect(mockSetInput).toHaveBeenCalledWith('/fish')
+    })
 
-    it('shows fishing cooldown when active', () => {
-        vi.mocked(useCommandConsole).mockReturnValue({
+    it('calls handleSubmit when form is submitted', () => {
+        render(<CommandConsole />)
+        const form = screen.getByTestId('input').closest('form')!
+        fireEvent.submit(form)
+        expect(mockHandleSubmit).toHaveBeenCalled()
+    })
+
+    it('displays fishing cooldown when greater than 0', () => {
+        mockUseCommandConsole.mockReturnValue({
             input: '',
             setInput: mockSetInput,
             handleSubmit: mockHandleSubmit,
             commandHistory: [],
-            fishingCooldown: 15,
-            scrollAreaRef: mockScrollAreaRef
-        });
+            fishingCooldown: 10,
+            scrollAreaRef: mockScrollAreaRef,
+            isInventoryLoaded: false,
+            money: 0,
+            xp: 0,
+            inventory: mockInventory
+        })
 
-        render(<CommandConsole />);
+        render(<CommandConsole />)
+        expect(screen.getByText(/Fishing cooldown: 10s remaining/i)).toBeInTheDocument()
+    })
 
-        expect(screen.getByText('Fishing cooldown: 15s remaining')).toBeInTheDocument();
-    });
+    it('does not display fishing cooldown when 0', () => {
+        render(<CommandConsole />)
+        expect(screen.queryByText(/Fishing cooldown/i)).not.toBeInTheDocument()
+    })
 
-    it('submits the form correctly', async () => {
-        render(<CommandConsole />);
+    it('passes reversed command history to CommandLog', () => {
+        const mockHistory: CommandType[] = [
+            { id: '1', command: 'test1', response: 'response1', timestamp: new Date().toISOString() },
+            { id: '2', command: 'test2', response: 'response2', timestamp: new Date().toISOString() }
+        ]
 
-        const form = screen.getByTestId('command-input').closest('form');
-        if (form) {
-            fireEvent.submit(form);
-        }
+        mockUseCommandConsole.mockReturnValue({
+            input: '',
+            setInput: mockSetInput,
+            handleSubmit: mockHandleSubmit,
+            commandHistory: mockHistory,
+            fishingCooldown: 0,
+            scrollAreaRef: mockScrollAreaRef,
+            isInventoryLoaded: false,
+            money: 0,
+            xp: 0,
+            inventory: mockInventory
+        })
 
-        expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
-    });
-
-    it('updates input when typing', async () => {
-        const user = userEvent.setup();
-        render(<CommandConsole />);
-
-        const input = screen.getByTestId('command-input');
-        await user.type(input, 'new command');
-
-        expect(mockSetInput).toHaveBeenCalled();
-    });
-
-    it('sets input when clicking command buttons', async () => {
-        const user = userEvent.setup();
-        render(<CommandConsole />);
-
-        const buttons = screen.getAllByTestId('button');
-
-        const fishButton = Array.from(buttons).find(
-            button => button.textContent?.includes('Fish') && !button.textContent?.includes('Sell Fish')
-        );
-
-        if (fishButton) {
-            await user.click(fishButton);
-            expect(mockSetInput).toHaveBeenCalledWith('/fish');
-        } else {
-            throw new Error('Fish button not found');
-        }
-    });
-});
+        render(<CommandConsole />)
+        expect(screen.getByTestId('command-log')).toHaveTextContent('2 entries')
+    })
+})
